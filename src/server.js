@@ -1,4 +1,4 @@
-const express   = require('express');
+const express   = require('express').Router();
 const bodyParser= require('body-parser');
 const mongodb   = require('mongodb');
 const v1Routes      = require('./routes/v1');
