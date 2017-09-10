@@ -1,15 +1,20 @@
-const express   = require('express').Router();
+const express   = require('express');
 const bodyParser= require('body-parser');
 const mongodb   = require('mongodb');
-const v1Routes      = require('./routes/v1');
+const db        = require('./db');
+const v1Routes  = require('./routes/v1');
+const port      =  process.env.PORT;
 
 
 //initiating app 
 const app = express();
 
-//middleware
+// //middleware
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 //use the routes
 app.use('/api/v1', v1Routes);
+
+//listen
+app.listen(port);
