@@ -1,5 +1,6 @@
 const noteRoutes = require('express').Router();
 const Note     = require('../../models/Note');
+const sendResponse = require('../../helper/sendResponse');
 
 noteRoutes.route('/')
 	.get((req, res) => {
@@ -7,29 +8,18 @@ noteRoutes.route('/')
 		Note.find({})
 			.then((data) => {
 				// console.log('data from db: ');
-				return res.status(200).json({
-					data: data,
-					status: 'ok',
-					message: 'get data successfully'
-				});
+				return sendResponse(res, 200, data, 'fetched data successful');
 			})
 			.catch((err) => {
-				return res.status(404).json({
-					data:[],
-					status: 'failed',
-					message: 'data not found'
-				});
+				return sendResponse(res, 404, [], 'data not found');
 			});
 	})
 
 	.post((req, res) => {
 		// console.log('request from body',req.body);
 		const {note} = req.body;
-		if(!note || !done){
-			return res.status(400).json({
-				data: [],
-				status:'parameters are missing'
-			});
+		if(!note){
+			return sendResponse(res, 400, [], 'parameters are missing');
 		}
 		const oneNotes = {
 			note
@@ -43,16 +33,10 @@ noteRoutes.route('/')
 		myNotes.save()
 			.then((data) => {
 				// console.log('*****data from db', data);   //note data is not saving
-				return res.status(200).json({
-					data:data,
-					status:'ok',
-				});
+				return sendResponse(res, 200, data, 'saved successfully');
 			})
 			.catch((err) => {
-				return res.status(404).json({
-					data:[],
-					status:'failed'
-				});
+				return sendResponse(res, 404, [], 'not found');
 			});
 
 	});
@@ -63,13 +47,11 @@ noteRoutes.route('/:id')
 		Note.findByIdAndRemove({_id: req.params.id})
 			.then((data) =>{
 				console.log('deleted');
-				res.send(data);
+				// res.send(data);
+				return sendResponse(res, 200, [], 'deleted successfully');
 			})
 			.catch(() => {
-				return res.status(404).json({
-					data: [],
-					status: 'something went wrong'
-				});
+				return sendResponse(res, 500, [], 'something went wrong');
 			});
       
 	});
