@@ -1,15 +1,12 @@
 const express   = require('express');
 const bodyParser= require('body-parser');
-const mongodb   = require('mongodb');
-const db        = require('./db');
 const v1Routes  = require('./routes/v1');
 const port      =  process.env.PORT;
-
 
 //initiating app 
 const app = express();
 
-// //middleware
+//middleware
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
