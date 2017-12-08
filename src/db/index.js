@@ -5,12 +5,12 @@ require('../config');
 mongoose.Promise = global.Promise;
 
 mongoose.connect(process.env.MONGODB_URI, {useMongoClient : true})
-.then(() => {
-  console.log('Sucessfuly connected to MongoDB');
-})
-.catch((err) => {
-  console.log('**ERROR in DB connection, exiting..');
-    process.exit(-1);
-});
+	.then(() => {
+		console.log('Successfully connected to MongoDB');
+	})
+	.catch((err) => {
+    console.error('**ERROR in DB connection, exiting..');
+		process.exit(-1);
+	});
 
 module.exports = mongoose;
